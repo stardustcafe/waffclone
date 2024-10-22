@@ -224,6 +224,4 @@ def read_item1(first,second):
     return response
 
 
-if __name__ == '__main__':
-    app.run() 
 
