@@ -157,7 +157,6 @@ async function drawGrid(container,row1,cols1){
         }
     }
     container.appendChild(grid);
-    checkWord();
     }
 
   
