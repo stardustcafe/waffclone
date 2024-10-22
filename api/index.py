@@ -4,7 +4,6 @@ from flask import jsonify
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)
-import pandas as pd
 from flask_cors import CORS,cross_origin
 CORS(app)
 
