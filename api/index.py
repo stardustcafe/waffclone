@@ -155,7 +155,7 @@ for i in range(5):
     letcheck2[i,2]=final_words[4]
     letcheck2[i,4]=final_words[5]
 
-
+newfinalword=final_words
 
 letcheck=letcheck1+letcheck2
 print(letcheck)
@@ -192,10 +192,43 @@ for i in range(5):
 
 # Print the shuffled grid
 print(newgrid)
+newfinalacross=final_words[:3]
+newfinaldown=final_words[3:]
+acrossindex=[]
+downindex=[]
+newfinalword=final_words
+
+def modifynewword(i,j,lett):
+    if (i in [0,2,4]) and (j in [0,2,4]):
+        r1=i//2
+        c1=j//2+3
+        newfinalword[r1]=newfinalword[r1].replace(lett,'',1)
+        newfinalword[c1]=newfinalword[c1].replace(lett,'',1)
+    elif ((i%2==0) and (j%2==1)):
+        r1=i//2
+        newfinalword[r1]=newfinalword[r1].replace(lett,'',1)
+    elif ((j%2==0) and (i%2==1)):
+        c1=j//2+3
+        newfinalword[c1]=newfinalword[c1].replace(lett,'',1)
+nnewfinalword=newfinalword
+
+
+def buildfinal(r,c,lett):
+    modifynewword(r,c,lett)
+    for i in range(5):
+        letcheck1[0,i]=newfinalword[0]
+        letcheck1[2,i]=newfinalword[1]
+        letcheck1[4,i]=newfinalword[2]
+        letcheck2[i,0]=newfinalword[3]
+        letcheck2[i,2]=newfinalword[4]
+        letcheck2[i,4]=newfinalword[5]
+    flc=letcheck1+letcheck2
+    return flc
 
 
 
 
+letcheck=letcheck1+letcheck2
 
 print(state_grid)
 @app.route("/")
@@ -206,8 +239,14 @@ def main():
 @app.route("/correct/<letter>/<int:first>/<int:second>")
 @cross_origin()
 def read_item(letter,first,second):
+    global letcheck
+    print('mainletcheck')
+    print(letcheck)
     if(state_grid[first-1][second-1]==letter):
         response = jsonify({"letter":1})
+        print(letcheck)
+        letcheck=buildfinal(first-1,second-1,letter)
+        print(letcheck)
     elif(letter in letcheck[first-1][second-1]):
         response = jsonify({"letter":2})
     else:
