@@ -14,7 +14,7 @@ import itertools
 import random
 import numpy as np
 word_list=[]
-file_path='./api/WORDS.txt'
+file_path='api/WORDS.txt'
 # List of 5-letter words
 with open(file_path, 'r') as f:
     word_list = [line.strip() for line in f]
