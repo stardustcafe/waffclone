@@ -21,8 +21,6 @@ const state={
 async function checkWord(){
         for (let j=0;j<5;j++){
         for (let i=0;i<5;i++){
-            console.log(i)
-            console.log(j)
             
             if (!((i==1 && j == 1) || (i==3 && j == 3) ||(i==1 && j == 3) || (i==3 && j == 1))) {
             var box = document.getElementById(`box${i}${j}`);
@@ -57,7 +55,7 @@ async function checkWord(){
     }
 
     }
-function drawBox(container,row,col,letter=""){
+async function drawBox(container,row,col,letter=""){
     const box=document.createElement('div');
     box.className='box';
     if ((row==1 && col == 1) || (row==3 && col == 3) ||(row==1 && col == 3) || (row==3 && col == 1)) {
