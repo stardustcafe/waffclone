@@ -64,7 +64,24 @@ async function drawBox(container,row,col,letter=""){
     box.id=`box${row}${col}`;
     box.textContent=letter;
     container.appendChild(box);
-    
+    var corletter= await checkletter(letter,row,col);
+    if (corletter==1){
+        box.classList.add('right');
+        box.classList.remove('wrong');
+        box.classList.remove("default");
+    }
+    else if (corletter==2){
+        box.classList.add("wrong");
+        box.classList.remove("right");
+        box.classList.remove("default");
+
+    }
+    else{
+        box.classList.add("default");
+        box.classList.remove("right");
+        box.classList.remove("wrong");
+
+    }
     box.addEventListener('click', function() {
         // If no item is selected, select the first one
         if(swapCount===0){
