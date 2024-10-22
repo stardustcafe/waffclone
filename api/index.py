@@ -225,3 +225,6 @@ def read_item1(first,second):
 
 
 
+if __name__ == "__main__":
+    app.run()
+    
