@@ -1,3 +1,4 @@
+/*
 const dictionary = ['earth','plane','crane','audio','house'];
 const state={
     secret: dictionary[Math.floor(Math.random()*dictionary.length)],
@@ -15,15 +16,16 @@ const state={
         var fword=chars.join("");
         return fword;
     }
+*/
 
-    
+
+// for a given row and col and the corletter flag from api route change the box css
 function checkWord(i,j,corletter){
 
             
             if (!((i==1 && j == 1) || (i==3 && j == 3) ||(i==1 && j == 3) || (i==3 && j == 1))) {
             var box = document.getElementById(`box${i}${j}`);
             if (!box) {
-            ; // Skip this iteration if the box is null
             }   
 
             if (corletter==1){
@@ -46,14 +48,13 @@ function checkWord(i,j,corletter){
         }
 }
 
-
+//alternate function to directly change css of box given the letcheck flag from api route
 async function checkWordBox(boxdive,corletter){
 
             
     
     var box = boxdive;
     if (!box) {
-         // Skip this iteration if the box is null
     }   
 
     if (corletter==1){
@@ -75,45 +76,43 @@ async function checkWordBox(boxdive,corletter){
     }
 }
 
-
+//fetch the scrambled letters
 async function fetchletter(k, l) {
     var url = "/letters/" + (k+1).toString() + "/" + (l+1).toString();
     try {
-        let response = await fetch(url); // Await the fetch
-        let data = await response.json(); // Await the JSON conversion
-        return data.letter; // Assuming the response has a 'letter' field
+        let response = await fetch(url);
+        let data = await response.json(); 
+        return data.letter; 
     } catch (error) {  
         console.error(error);
     }
 }
 
-
+//fetch the check flag for a particular letter and given row and col
 async function checkletter(letter2,k, l) {
     var url = "/correct/"+letter2 +'/'+ (k+1).toString() + "/" + (l+1).toString();
     try {
-        let response = await fetch(url); // Await the fetch
-        let data = await response.json(); // Await the JSON conversion
-        return data.letter; // Assuming the response has a 'letter' field
+        let response = await fetch(url); 
+        let data = await response.json(); 
+        return data.letter; 
     } catch (error) {
         console.error(error);
     }
 }
 
 
-
+//main grid layout constructor
 async function drawGrid(container,row1,cols1){
 
     const grid =document.createElement("div");
-    grid.className='grid';
+    grid.className='grid'; //create class grid div
     /*console.log(sWord);
     var sArray=sWord.split("");*/
     const gridSize=5
  
     for (let i=0;i<cols1;i++){
         for (let j=0;j<row1;j++){
-
-
-                var lett= await fetchletter(i,j);
+                var lett= await fetchletter(i,j); 
                 var letflag= await checkletter(lett,i,j);
                 console.log("checkword");
                 console.log(letflag);
@@ -123,6 +122,8 @@ async function drawGrid(container,row1,cols1){
     container.appendChild(grid);
     }
 
+
+    //construct a box within grid
     async function drawBox(container,row,col,letter="",corletter){
         const box=document.createElement('div');
         box.className='box';
@@ -158,8 +159,8 @@ async function drawGrid(container,row1,cols1){
               // Remove the selected class after swapping
               firstSelected.classList.remove('selected');
               secondSelected.classList.remove('selected');
-               // Reset for the next selection
-              swapCount=swapCount-1;
+               // Reset the next selection
+              swapCount=swapCount-1; //swap counter
               var swid=document.getElementById("swapCID");
               swid.innerHTML=`Number of Swaps Left:${swapCount}`;
               var curlett=firstSelected.innerHTML;
@@ -215,13 +216,14 @@ function startup(){
     game.appendChild(counterdiv);
     counterdiv.id='swapCID';
     counterdiv.innerHTML=`Number of Swaps Left:${swapCount}`;
-    const sWord=scrambleWord(state.secret);
    
     drawGrid(game,5,5);
 
 
 
     }
+
+    //initialize the game variable
     var rowc=0;
     var colc=0;
     var lettersf='';

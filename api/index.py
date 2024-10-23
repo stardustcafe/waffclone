@@ -281,6 +281,8 @@ def read_item(letter,first,second):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+#api to route the scrambled letters
+
 @app.route("/letters/<int:first>/<int:second>")
 @cross_origin()
 def read_item1(first,second):
